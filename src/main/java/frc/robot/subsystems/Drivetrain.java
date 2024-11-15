@@ -15,7 +15,7 @@ public class Drivetrain extends SubsystemBase  {
     private final VictorSP backRight = new VictorSP(Constants.Drivetrain.backRightID);
     private final VictorSP backLeft = new VictorSP(Constants.Drivetrain.backLeftID);
 
-    private final AHRS navx = new AHRS();
+    private final AHRS navx = new AHRS(); //change input to use usb for navx micro
 
     private final Encoder rightEncoder = new Encoder(Constants.Drivetrain.rightEncoderInputA, Constants.Drivetrain.rightEncoderInputB);
     private final Encoder leftEncoder = new Encoder(Constants.Drivetrain.leftEncoderInputA, Constants.Drivetrain.leftEncoderInputB);
