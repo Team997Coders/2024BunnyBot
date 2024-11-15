@@ -29,6 +29,10 @@ public final class Constants {
      public static final int leftEncoderInputA = 0;
     public static final int leftEncoderInputB = 0;
   }
-  
+    public static class Intake {
+      public static final int armSparkMaxCANID = 0;
+
+      public static final int intakeMotorID = 0;
+    }
 
 }
