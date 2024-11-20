@@ -33,6 +33,20 @@ public final class Constants {
       public static final int armSparkMaxCANID = 0;
 
       public static final int intakeMotorID = 0;
+      public static final int topLimitSwitchID = 0;
+      public static final int bottomLimitSwitchID = 0;
     }
+    
+   public static class Indexer {
+    public static final int fanChunkID = 0;
+    public static final int escapefanID = 0;
+    public static final int bottombBeamBreakID = 0;
+    public static final int topBeamBreakID = 0;
+   }
+
+   public static class PickerUpper {
+    public static final int lifterMotorID = 0;
+    public static final int limitSwitchID = 0;
+   }
 
 }

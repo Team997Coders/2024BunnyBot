@@ -16,4 +16,8 @@ public class Indexer extends SubsystemBase {
     
      private final DigitalInput bottombBeamBreak = new DigitalInput(Constants.Indexer.bottombBeamBreakID);
      private final DigitalInput topBeamBreak = new DigitalInput(Constants.Indexer.bottombBeamBreakID);
+
+     public Indexer(){
+      
+     }
 }

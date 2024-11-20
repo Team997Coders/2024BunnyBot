@@ -20,5 +20,9 @@ public class Intake extends SubsystemBase {
 
     private final DigitalInput topLimitSwitch = new DigitalInput(Constants.Intake.topLimitSwitchID);
     private final DigitalInput bottomLimitSwitch = new DigitalInput(Constants.Intake.bottomLimitSwitchID);
+
+    public Intake(){
+        
+    }
     
 }
