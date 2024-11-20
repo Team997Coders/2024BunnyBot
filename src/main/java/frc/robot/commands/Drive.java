@@ -7,8 +7,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class Drive extends Command {
     private final Drivetrain drivetrain = new Drivetrain();
 
+    private double m_rightInput;
+    private double m_leftInput;
 
-    public Drive(double turnInput, double driveInput) {
+    public Drive(double rightInput, double leftInput) {
+
+      m_rightInput = rightInput;
+      m_leftInput = leftInput;
 
     }
 
@@ -20,14 +25,8 @@ public class Drive extends Command {
     
     @Override
     public void execute() {
+      drivetrain.runMotors(m_rightInput, m_leftInput);
       
-
-
-
-
-
-
-
     }
 
 
