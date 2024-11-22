@@ -13,9 +13,6 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-    private final CANSparkMax armSparkMax = new CANSparkMax(Constants.Intake.armSparkMaxCANID, MotorType.kBrushless);
-    private final RelativeEncoder armEncoder = armSparkMax.getEncoder();
-
     private final VictorSP intakeMotor = new VictorSP(Constants.Intake.intakeMotorID);
 
     private final DigitalInput topLimitSwitch = new DigitalInput(Constants.Intake.topLimitSwitchID);
@@ -23,6 +20,15 @@ public class Intake extends SubsystemBase {
 
     public Intake(){
         
+
     }
     
+
+    public void spinFlapper(double percentSpeed){
+        intakeMotor.set(percentSpeed);
+    }
+
+
+
+
 }
