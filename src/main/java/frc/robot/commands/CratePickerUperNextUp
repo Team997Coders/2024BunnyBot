@@ -11,16 +11,11 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class CratePickerUperController extends Command {
+public class CratePickerUperNextUp extends Command {
   private CratePickerUper cratePickerUper;
-  private PIDController cratePickerUperPidController;
 
-  public CratePickerUperController(CratePickerUper cratePickerUperSubsystem) {
+  public CratePickerUperNextUp(CratePickerUper cratePickerUperSubsystem) {
     cratePickerUper = cratePickerUperSubsystem;
-    cratePickerUperPidController = new PIDController(
-      PickerUper.pid.p, PickerUper.pid.i, PickerUper.pid.d);
-
-    addRequirements(cratePickerUper);
   }
 
   // Called when the command is initially scheduled.
@@ -29,15 +24,7 @@ public class CratePickerUperController extends Command {
 
   @Override
   public void execute() {
-    try
-    {
-    cratePickerUper.outputLimitCheck(cratePickerUperPidController.calculate(
-      cratePickerUper.getLinkageEncoder(), cratePickerUper.TargetPosition));
-    } catch(invalidCrateMotorOutput exception)
-    {
-      exception.emergencyStopMessage();
-      cratePickerUper.EmergencyStop();
-    }
+    cratePickerUper.moveToNextPositionUp()
   }
 
   @Override

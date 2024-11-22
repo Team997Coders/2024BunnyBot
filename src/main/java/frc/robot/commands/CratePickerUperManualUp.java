@@ -7,18 +7,14 @@ package frc.robot.commands;
 import frc.robot.Constants.PickerUper;
 import frc.robot.Exceptions.invalidCrateMotorOutput;
 import frc.robot.subsystems.CratePickerUper;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class CratePickerUperController extends Command {
+public class CratePickerUperManualUp extends Command {
   private CratePickerUper cratePickerUper;
-  private PIDController cratePickerUperPidController;
 
-  public CratePickerUperController(CratePickerUper cratePickerUperSubsystem) {
+  public CratePickerUperManualUp(CratePickerUper cratePickerUperSubsystem) {
     cratePickerUper = cratePickerUperSubsystem;
-    cratePickerUperPidController = new PIDController(
-      PickerUper.pid.p, PickerUper.pid.i, PickerUper.pid.d);
 
     addRequirements(cratePickerUper);
   }
@@ -31,17 +27,20 @@ public class CratePickerUperController extends Command {
   public void execute() {
     try
     {
-    cratePickerUper.outputLimitCheck(cratePickerUperPidController.calculate(
-      cratePickerUper.getLinkageEncoder(), cratePickerUper.TargetPosition));
+      //TODO: Make sure motor is spinning the right direction
+        cratePickerUper.outputLimitCheck(PickerUper.manualOutput);
     } catch(invalidCrateMotorOutput exception)
     {
-      exception.emergencyStopMessage();
-      cratePickerUper.EmergencyStop();
+        exception.emergencyStopMessage();
+        cratePickerUper.EmergencyStop();
     }
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) 
+  {
+    cratePickerUper.setTargetToCurrentPosition();
+  }
 
   @Override
   public boolean isFinished() {

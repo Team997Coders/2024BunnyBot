@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import java.util.Arrays;
+import java.util.List;
+
 import edu.wpi.first.math.controller.PIDController;
 
 /**
@@ -32,6 +35,17 @@ public final class Constants {
       public static final double i = 0;
       public static final double d = 0; 
     }
+    //TODO: Set the four positions for 4-bar-linkage targets
+    public static final List<Double> targetPositions = Arrays.asList(
+      0.0, 0.0, 0.0, 0.0);
+    //      1    2    3    4
+    //1: All the way Up
+    //2: Crate up holding position
+    //3: Crate ready to pick up position
+    //4: Crate pick up
+    //TODO: set manual output and voltage for cratePickerUper
+    public static final double manualOutput = 0.0;
+    public static final double manualVoltage = 0.0;
   }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;

@@ -5,13 +5,20 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+
+import java.util.List;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.PickerUper;
+import frc.robot.Exceptions.invalidCrateMotorOutput;
+import frc.robot.Exceptions.invalidNextPosition;
+import frc.robot.Exceptions.invalidTargetPosition;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CratePickerUper extends SubsystemBase 
@@ -22,6 +29,9 @@ public class CratePickerUper extends SubsystemBase
 
   public DigitalInput topLimitSwitch;
   public DigitalInput bottomLimitSwitch;
+
+  //Triggered when Motor runs into Limit Switch and poses a danger to the robot
+  public static boolean LinkageMotorEStop = false;
 
   public CratePickerUper() 
   {
@@ -36,12 +46,23 @@ public class CratePickerUper extends SubsystemBase
 
   public void setMotorVoltage(double volts) 
   {
+    if (!LinkageMotorEStop)
+    {
     LinkageMotor.setVoltage(volts);
+    }
   }
 
   public void setMotorOutput(double motorOutput) 
   {
+    if (!LinkageMotorEStop)
+    {
     LinkageMotor.set(motorOutput);
+    }
+  }
+
+  public void EmergencyStop()
+  {
+    LinkageMotorEStop = true;
   }
 
   public double getLinkageEncoder()
@@ -54,11 +75,9 @@ public class CratePickerUper extends SubsystemBase
     TargetPosition = newTargetPosition;
   }
 
-  public Command setTargetPositionCommand(double newTargetPosition) {
-    return runOnce(
-        () -> {
-          TargetPosition = newTargetPosition;
-        });
+  public void setTargetToCurrentPosition()
+  {
+    setTargetPosition(getLinkageEncoder());
   }
 
   public boolean getTopLimitSwitch()
@@ -71,9 +90,67 @@ public class CratePickerUper extends SubsystemBase
     return bottomLimitSwitch.get();
   }
 
-  @Override
-  public void periodic() 
+  public void targetPositionLimitCheck(double targetPosition) throws invalidTargetPosition
   {
-    // This method will be called once per scheduler run
+    //TODO: Make sure greater then less then symbols are correct for limit switch positions
+    if (targetPosition > PickerUper.topLimitSwitchPosition || targetPosition < PickerUper.bottomLimitSwitchPosition)
+    {
+      throw new invalidTargetPosition("targetPosition out of bounds");
+    } else 
+    {
+      setTargetPosition(targetPosition);
+    }
   }
+
+  public void outputLimitCheck(double motorOutput) throws invalidCrateMotorOutput
+  {
+    //TODO: Make sure greater then less then symbols are correct for limit switch positions
+    if ((getTopLimitSwitch() & motorOutput > 0))
+    {
+      setMotorOutput(0);
+      throw new invalidCrateMotorOutput("Emergency stop; invalid motorOutput into topLimitSwitch");
+    } else if ((getBottomLimitSwitch() & motorOutput < 0))
+    {
+      setMotorOutput(0);
+      throw new invalidCrateMotorOutput("Emergency stop; invalid motorOutput into bottomLimitSwitch");
+    } else 
+    {
+      setMotorOutput(motorOutput);
+    }
+  }
+
+  public void moveToNextPositionDown() throws invalidNextPosition
+  {
+    //TODO: Make sure greater then less then symbols are correct for motor direction
+    List<Double> targetPositions = PickerUper.targetPositions;
+    double currentPosition = getLinkageEncoder();
+    for(int targetPosition = 1; targetPosition > targetPositions.size(); targetPosition++)
+    {
+      if (currentPosition > targetPositions.get(targetPosition))
+      {
+        setTargetPosition(targetPositions.get(targetPosition));
+        return;
+      }
+    }
+    throw new invalidNextPosition("No next position available; direction: down");
+  }
+
+  public void moveToNextPositionUp() throws invalidNextPosition
+  {
+    //TODO: Make sure greater then less then symbols are correct for motor direction
+    List<Double> targetPositions = PickerUper.targetPositions;
+    double currentPosition = getLinkageEncoder();
+    for(int targetPosition = targetPositions.size(); targetPosition > 1; targetPosition--)
+    {
+      if (currentPosition < targetPositions.get(targetPosition))
+      {
+        setTargetPosition(targetPositions.get(targetPosition));
+        return;
+      }
+    }
+    throw new invalidNextPosition("No next position available; direction: up");
+  }
+
+  @Override
+  public void periodic() {}
 }
