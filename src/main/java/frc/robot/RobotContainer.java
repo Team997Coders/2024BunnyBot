@@ -15,6 +15,7 @@ import frc.robot.subsystems.CratePickerUper;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,15 +26,18 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final CratePickerUper cratePickerUper = new CratePickerUper();
-
+  private final Drivetrain m_drivetrain = new Drivetrain();
+  
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
+
+  
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
-    cratePickerUper.setDefaultCommand(new CratePickerUperController(cratePickerUper));
     // Configure the trigger bindings
     configureBindings();
   }
