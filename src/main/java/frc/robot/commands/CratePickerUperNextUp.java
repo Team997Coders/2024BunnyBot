@@ -4,10 +4,8 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants.PickerUper;
-import frc.robot.Exceptions.invalidCrateMotorOutput;
+import frc.robot.Exceptions.invalidNextPosition;
 import frc.robot.subsystems.CratePickerUper;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
@@ -24,7 +22,13 @@ public class CratePickerUperNextUp extends Command {
 
   @Override
   public void execute() {
-    cratePickerUper.moveToNextPositionUp()
+    try
+    {
+    cratePickerUper.moveToNextPositionUp();
+    } catch(invalidNextPosition exception)
+    {
+      exception.invalidNextPositionMessage();
+    }
   }
 
   @Override

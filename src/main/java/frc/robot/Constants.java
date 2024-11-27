@@ -24,7 +24,7 @@ public final class Constants {
     //TODO: Get starting target position of the 4 bar linkage (probably up)
     public static final double startTargetPosition = 0.0;
     //TODO: Get Limit switch (Digital input) id# for both top and bottom max
-    public static final int topLimitSwitchID = 0;
+    public static final int topLimitSwitchID = 1;
     public static final int bottomLimitSwitchID = 0;
     //TODO: fix the inequalities in cratePickerUperController Command for corrected limit switch locations
     public static final int topLimitSwitchPosition = 0;
