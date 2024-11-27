@@ -18,31 +18,30 @@ public final class Constants {
   }
 
   public static class Drivetrain  {
-    public static final int frontRightID = 0;
-    public static final int frontLeftID = 0;
-    public static final int backRightID = 0;
-    public static final int backLeftID = 0;
+    public static final int frontRightCANID = 0; //CAN
+    public static final int frontLeftCANID = 1;
+    public static final int backRightCANID = 2;
+    public static final int backLeftCANID = 3;
 
-    public static final int rightEncoderInputA = 0;
-    public static final int rightEncoderInputB = 0;
-
-     public static final int leftEncoderInputA = 0;
-    public static final int leftEncoderInputB = 0;
+    public static final int rightEncoderInputA = 0; //DIO
+    public static final int rightEncoderInputB = 1;
+     public static final int leftEncoderInputA = 2;
+    public static final int leftEncoderInputB = 3;
   }
     public static class Intake {
-      public static final int armSparkMaxCANID = 0;
-
-      public static final int intakeMotorID = 0;
-      public static final int topLimitSwitchID = 0;
-      public static final int bottomLimitSwitchID = 0;
+      public static final int intakeMotorID = 0; //PWM
+      public static final int topLimitSwitchID = 1;
+      public static final int bottomLimitSwitchID = 2;
     }
     
    public static class Indexer {
-    public static final int fanChunkID = 0;
-    public static final int escapefanID = 0;
-    public static final int bottombBeamBreakID = 0;
-    public static final int topBeamBreakID = 0;
-    public static final int servo1ID = 0;
+    public static final int fanChunkID = 3; //PWM
+    public static final int escapefanID = 4;
+    public static final int servo1ID = 5;
+
+    public static final int bottombBeamBreakID = 4; //DIO
+    public static final int topBeamBreakID = 5;
+
    }
 
 
