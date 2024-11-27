@@ -6,7 +6,7 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeCommand extends Command{
 
-    public Intake m_intake;
+    private Intake m_intake;
 
     public IntakeCommand(Intake intake){
         m_intake = intake;

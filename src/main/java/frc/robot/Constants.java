@@ -32,6 +32,8 @@ public final class Constants {
       public static final int intakeMotorID = 0; //PWM
       public static final int topLimitSwitchID = 1;
       public static final int bottomLimitSwitchID = 2;
+
+      public static final double defaultSpinnerSpeed = 0.3;
     }
     
    public static class Indexer {
