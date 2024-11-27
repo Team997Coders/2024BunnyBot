@@ -42,6 +42,7 @@ public class RobotContainer {
     m_drivetrain.runMotors(m_driverController.getRightY(), m_driverController.getLeftY());
     // Configure the trigger bindings
     configureBindings();
+    
   }
 
   /**
