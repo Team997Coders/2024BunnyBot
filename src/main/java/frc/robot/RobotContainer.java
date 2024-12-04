@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Indexer;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,6 +33,9 @@ public class RobotContainer {
 
   private final Intake m_intake = new Intake();
   private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
+
+  private final Indexer m_index = new Indexer();
+  private final IndexCommand m_indexCommand = new IndexCommand(m_index);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -62,6 +67,7 @@ public class RobotContainer {
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
     m_driverController.a().whileTrue(m_IntakeCommand);
+    m_driverController.b().toggleOnTrue(m_indexCommand);
     
   }
 
