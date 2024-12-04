@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 
 import java.util.List;
 
+import com.ctre.phoenix.GadgeteerUartClient.GadgeteerUartStatus;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -29,6 +30,8 @@ public class CratePickerUper extends SubsystemBase
 
   public DigitalInput topLimitSwitch;
   public DigitalInput bottomLimitSwitch;
+  
+  public DigitalInput crateSensor;
 
   //Triggered when Motor runs into Limit Switch and poses a danger to the robot
   public static boolean LinkageMotorEStop = false;
@@ -42,6 +45,16 @@ public class CratePickerUper extends SubsystemBase
 
     topLimitSwitch = new DigitalInput(PickerUper.topLimitSwitchID);
     bottomLimitSwitch = new DigitalInput(PickerUper.bottomLimitSwitchID);
+
+    crateSensor = new DigitalInput(PickerUper.crateSensorID);
+  }
+  // Sensor Status 
+  public boolean isThereACrate(){
+    if (crateSensor.get()){
+      return true;
+    } else{
+      return false;
+    }
   }
 
   public void setMotorVoltage(double volts) 

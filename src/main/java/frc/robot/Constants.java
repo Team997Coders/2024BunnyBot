@@ -26,6 +26,8 @@ public final class Constants {
     //TODO: Get Limit switch (Digital input) id# for both top and bottom max
     public static final int topLimitSwitchID = 1;
     public static final int bottomLimitSwitchID = 0;
+
+    public static final int crateSensorID = 0;
     //TODO: fix the inequalities in cratePickerUperController Command for corrected limit switch locations
     public static final int topLimitSwitchPosition = 0;
     public static final int bottomLimitSwitchPosition = 0;
@@ -72,11 +74,12 @@ public final class Constants {
     
    public static class Indexer {
     public static final int fanChunkID = 3; //PWM
-    public static final int escapefanID = 4;
     public static final int servo1ID = 5;
 
     public static final int bottombBeamBreakID = 4; //DIO
     public static final int topBeamBreakID = 5;
+
+    public static final double escapeServoAngleDegrees = 180;
 
    }
 

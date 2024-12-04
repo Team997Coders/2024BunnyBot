@@ -17,8 +17,6 @@ public class Indexer extends SubsystemBase {
 
     private final VictorSP fanChunk = new VictorSP(Constants.Indexer.fanChunkID);
 
-    private final VictorSP escapefan = new VictorSP(Constants.Indexer.escapefanID);
-
     private final ColorSensor colorSensor = new ColorSensor();
     
 
@@ -29,6 +27,7 @@ public class Indexer extends SubsystemBase {
      private final DigitalInput topBeamBreak = new DigitalInput(Constants.Indexer.bottombBeamBreakID);
      private final Servo servo1 = new Servo(Constants.Indexer.servo1ID);
 
+ 
 
      public Indexer(){
       
@@ -37,14 +36,12 @@ public class Indexer extends SubsystemBase {
      public void spinFans(double speed){
       fanChunk.set(speed);
      }
-     public void spinEscapeFan(double speed){
-      escapefan.set(speed);
-     }
 
      public boolean getBottomBeamBreak(){
       return bottombBeamBreak.get();
       // verify if true means something there
      }
+
 
      public boolean getTopBeamBreak(){
       return topBeamBreak.get();
