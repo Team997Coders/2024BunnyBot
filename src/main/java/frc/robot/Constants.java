@@ -26,8 +26,11 @@ public final class Constants {
     public static final int rightEncoderInputA = 0;
     public static final int rightEncoderInputB = 0;
 
-     public static final int leftEncoderInputA = 0;
+    public static final int leftEncoderInputA = 0;
     public static final int leftEncoderInputB = 0;
+
+    //TODO: get track width of drive base, probably important
+    public static final double TrackWidth = 0.0;
   }
     public static class Intake {
       public static final int armSparkMaxCANID = 0;
