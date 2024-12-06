@@ -5,6 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.CratePickerUperManualDown;
+import frc.robot.commands.CratePickerUperManualUp;
+import frc.robot.commands.CratePickerUperNextDown;
+import frc.robot.commands.CratePickerUperNextUp;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Intake;
@@ -29,6 +33,8 @@ import frc.robot.subsystems.Indexer;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final CratePickerUper cratePickerUper = new CratePickerUper();
+
   private final Drivetrain m_drivetrain = new Drivetrain();
   
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -51,6 +57,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_drivetrain.runMotors(m_driverController.getRightY(), m_driverController.getLeftY());
+
     // Configure the trigger bindings
     configureBindings();
 
@@ -80,7 +87,10 @@ public class RobotContainer {
 
     isThereCrateTrigger.whileTrue(m_IndexCommand);
 
-
+    m_driverController.povUp().whileTrue(new CratePickerUperManualUp(cratePickerUper));
+    m_driverController.povDown().whileTrue(new CratePickerUperManualDown(cratePickerUper));
+    m_driverController.povLeft().onTrue(new CratePickerUperNextUp(cratePickerUper));
+    m_driverController.povRight().onTrue(new CratePickerUperNextDown(cratePickerUper));
     
   }
 
@@ -89,6 +99,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
   public Command getAutonomousCommand() {
     return null;
   }
