@@ -10,19 +10,29 @@ public class IndexCommand<pull> extends Command{
     private Indexer m_index;
     private IntakeCommand m_intakeCommand;
 
-    public IndexCommand(Indexer index, IntakeCommand intakeCommand){
+    public boolean m_automatic = true;
+    public boolean m_spinIndexer;
+    public boolean m_openServo;
+
+    public IndexCommand(Indexer index, IntakeCommand intakeCommand,boolean automatic, boolean spinIndexer,boolean openServo){
         m_index = index;
         m_intakeCommand = intakeCommand;
+        m_spinIndexer = spinIndexer;
+        m_automatic = automatic;
+        m_openServo = openServo;
     }
 
     @Override
     public void initialize() {
+
        
     }
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() { //TEST PLEASE
+
+      if(m_automatic) {
       int balloonCounter = 0;
 
     if (balloonCounter == 0) {
@@ -46,6 +56,21 @@ public class IndexCommand<pull> extends Command{
     if (m_index.getTopBeamBreak()) {
       balloonCounter--;
     }
+  } else if (m_automatic == false) {
+      if (m_spinIndexer){
+        m_index.spinFans(1);
+      } else{
+
+      
+
+      }
+
+      if (m_openServo){
+        m_index.moveServo1(Constants.Indexer.escapeServoAngleDegrees);
+      } else{
+
+      }
+  }
 
     }
   

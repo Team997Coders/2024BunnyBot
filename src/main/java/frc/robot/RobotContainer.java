@@ -40,7 +40,7 @@ public class RobotContainer {
   private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
 
   private final Indexer m_indexer = new Indexer();
-  private final IndexCommand m_IndexCommand = new IndexCommand(m_indexer, m_IntakeCommand);
+  private final IndexCommand m_IndexCommand = new IndexCommand(m_indexer, m_IntakeCommand, !m_driverController.button(8).getAsBoolean(), m_driverController.b().getAsBoolean(), m_driverController.y().getAsBoolean());
 
   private final CratePickerUper m_CratePickerUper = new CratePickerUper();
 
@@ -79,9 +79,8 @@ public class RobotContainer {
     m_driverController.a().whileTrue(m_IntakeCommand);
 
     isThereCrateTrigger.whileTrue(m_IndexCommand);
-    
 
-    
+
     
   }
 
