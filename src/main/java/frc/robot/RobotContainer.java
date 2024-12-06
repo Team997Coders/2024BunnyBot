@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,15 +29,18 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-
+      
   
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_drivetrain.runMotors(m_driverController.getRightY(), m_driverController.getLeftY());
     // Configure the trigger bindings
     configureBindings();
+
+    m_drivetrain.setDefaultCommand(new Drive(
+      () -> m_driverController.getRightY(), 
+      () -> m_driverController.getRightX()));
   }
 
   /**
