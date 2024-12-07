@@ -7,16 +7,18 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Drive extends Command {
-    private final Drivetrain drivetrain = new Drivetrain();
 
     private double m_forwardSupplier;
     private double m_turnSupplier;
+    private Drivetrain m_drivetrain;
 
-    public Drive(Supplier<Double> forwardSupplier, Supplier<Double> turnSupplier
-) {
+    public Drive(Drivetrain drivetrain, Supplier<Double> forwardSupplier, Supplier<Double> turnSupplier) 
+    {
       m_forwardSupplier = forwardSupplier.get();
       m_turnSupplier = turnSupplier.get();
+      m_drivetrain = drivetrain;
 
+      addRequirements(drivetrain);
     }
 
 
@@ -29,7 +31,7 @@ public class Drive extends Command {
     public void execute() {
       double rightPower = m_forwardSupplier - m_turnSupplier;
       double leftPower =  m_forwardSupplier + m_turnSupplier;
-      drivetrain.runMotors(rightPower, leftPower);
+      m_drivetrain.runMotors(rightPower, leftPower);
       
     }
 

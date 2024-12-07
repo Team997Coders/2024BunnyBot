@@ -34,25 +34,23 @@ import frc.robot.subsystems.Indexer;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final CratePickerUper cratePickerUper = new CratePickerUper();
+  //private final CratePickerUper cratePickerUper = new CratePickerUper();
 
-  private final Drivetrain m_drivetrain = new Drivetrain();
+  //private final Drivetrain m_drivetrain = new Drivetrain();
   
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
       
-  private final Intake m_intake = new Intake();
-  private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
+  //private final Intake m_intake = new Intake();
+  //private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
 
   private final Indexer m_indexer = new Indexer();
-  private final IndexCommand m_IndexCommand = new IndexCommand(m_indexer, m_IntakeCommand, !m_driverController.button(8).getAsBoolean(), m_driverController.b().getAsBoolean(), m_driverController.y().getAsBoolean());
-
-  private final CratePickerUper m_CratePickerUper = new CratePickerUper();
+  //private final CratePickerUper m_CratePickerUper = new CratePickerUper();
 
 
-  Trigger isThereCrateTrigger = new Trigger(m_CratePickerUper.crateSensor::get);
+  //Trigger isThereCrateTrigger = new Trigger(m_CratePickerUper.crateSensor::get);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -60,9 +58,15 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    m_drivetrain.setDefaultCommand(new Drive(
-      () -> m_driverController.getRightY(), 
-      () -> m_driverController.getRightX()));
+    m_indexer.setDefaultCommand(new IndexCommand(
+      m_indexer, false, 
+      () -> (m_driverController.b().getAsBoolean()), 
+      () -> (m_driverController.y().getAsBoolean())));
+
+
+    //m_drivetrain.setDefaultCommand(new Drive(
+    //  () -> m_driverController.getRightY(), 
+    //  () -> m_driverController.getRightX()));
   }
 
   /**
@@ -81,14 +85,15 @@ public class RobotContainer {
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
-    m_driverController.a().whileTrue(m_IntakeCommand);
+    //m_driverController.a().whileTrue(m_IntakeCommand);
 
-    isThereCrateTrigger.whileTrue(m_IndexCommand);
+    //isThereCrateTrigger.whileTrue(m_IndexCommand);
 
-    m_driverController.povUp().whileTrue(new CratePickerUperManualUp(cratePickerUper));
-    m_driverController.povDown().whileTrue(new CratePickerUperManualDown(cratePickerUper));
-    m_driverController.povLeft().onTrue(new CratePickerUperNextUp(cratePickerUper));
-    m_driverController.povRight().onTrue(new CratePickerUperNextDown(cratePickerUper));
+
+    //m_driverController.povUp().whileTrue(new CratePickerUperManualUp(cratePickerUper));
+    //m_driverController.povDown().whileTrue(new CratePickerUperManualDown(cratePickerUper));
+    //m_driverController.povLeft().onTrue(new CratePickerUperNextUp(cratePickerUper));
+    //m_driverController.povRight().onTrue(new CratePickerUperNextDown(cratePickerUper));
     
   }
 
