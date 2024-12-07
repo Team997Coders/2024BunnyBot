@@ -2,11 +2,15 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
+import javax.lang.model.util.ElementScanner14;
+
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.Intake;
+import frc.robot.lib.ColorSensor.ColorData;
 import frc.robot.subsystems.Indexer;
 
 public class IndexCommand<pull> extends Command{
@@ -36,6 +40,9 @@ public class IndexCommand<pull> extends Command{
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() { //TEST PLEASE
+      ColorData color = m_index.getColorTuples();
+      double red = color.red;
+      double blue = color.blue;
         if(m_automatic) 
         {
           if (balloonCounter == 0) 
@@ -52,20 +59,38 @@ public class IndexCommand<pull> extends Command{
           {
             lastBottomBeamBreak = false;
           }
-          if (m_index.isColorGood() != null && !lastColor) 
+
+          if (red - blue >= 25) //Balloon is Red
           {
-            lastColor = true;
-            if (m_index.isColorGood())
+            if (!lastColor)
             {
-              m_index.moveEscapeServo(Constants.Indexer.closedServoAngleDegrees);
-            } else 
-            {
-              m_index.moveEscapeServo(Constants.Indexer.escapeServoAngleDegrees);
+              lastColor = true;
+              if (m_index.getAlliance() == Alliance.Red)
+              {
+                m_index.moveEscapeServo(Constants.Indexer.closedServoAngleDegrees);
+              } else
+              {
+                m_index.moveEscapeServo(Constants.Indexer.escapeServoAngleDegrees);
+              }
             }
-          } else if (m_index.isColorGood() == null)
+          } else if (blue - red >= 25) //Balloon is Blue
+          {
+            if (!lastColor)
+            {
+              lastColor = true;
+              if (m_index.getAlliance() == Alliance.Blue)
+              {
+                m_index.moveEscapeServo(Constants.Indexer.closedServoAngleDegrees);
+              } else
+              {
+                m_index.moveEscapeServo(Constants.Indexer.escapeServoAngleDegrees);
+              }
+            }
+          } else //There is no balloon
           {
             lastColor = false;
           }
+
       if (m_index.getTopBeamBreak() && !lastTopBeamBreak) 
       {
         lastTopBeamBreak = true;
@@ -96,7 +121,7 @@ public class IndexCommand<pull> extends Command{
     SmartDashboard.putNumber("Balloon Counter", balloonCounter);
     SmartDashboard.putBoolean("top beam break", m_index.getTopBeamBreak());
     SmartDashboard.putBoolean("bottom beam break", m_index.getBottomBeamBreak());
-    Color color = m_index.getColorTuples();
+    
     SmartDashboard.putNumber("red", color.red);
     SmartDashboard.putNumber("green", color.green);
     SmartDashboard.putNumber("blue", color.blue);

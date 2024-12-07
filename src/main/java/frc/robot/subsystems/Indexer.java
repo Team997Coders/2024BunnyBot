@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -13,12 +14,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.lib.ColorSensor;
+import frc.robot.lib.ColorSensor.ColorData;
 
 public class Indexer extends SubsystemBase { 
 
     private final Spark fanChunk = new Spark(Constants.Indexer.FanChunkID);
 
-    private final ColorSensor colorSensor = new ColorSensor();
+    private final ColorSensor colorSensor = new ColorSensor(I2C.Port.kMXP);
     
      Optional<Alliance> ally = DriverStation.getAlliance();
      
@@ -47,7 +49,7 @@ public class Indexer extends SubsystemBase {
      }
 
      public Boolean isColorGood() {
-      Color color = colorSensor.readColor();
+      ColorData color = colorSensor.getColorData();
       double blue = color.blue;
       double red = color.red;
       Alliance estimatedColor = null;
@@ -70,8 +72,13 @@ public class Indexer extends SubsystemBase {
       return output;
      }
 
-    public Color getColorTuples() 
+    public Alliance getAlliance()
     {
-      return colorSensor.readColor();
+      return ally.get();
+    }
+
+    public ColorData getColorTuples() 
+    {
+      return colorSensor.getColorData();
     }
 }

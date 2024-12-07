@@ -1,4 +1,4 @@
-package frc.robot.sensors;
+package frc.robot.lib;
 
 import edu.wpi.first.wpilibj.I2C;
 
@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.I2C;
  * Driver for the APDS-9151 color sensor. 
  * Reads ambient light and RGB values from the sensor.
  */
-public class APDS9151 {
+public class ColorSensor {
     private static final int APDS9151_I2C_ADDRESS = 0x39; // Default I2C address for the APDS-9151
     private static final int ENABLE_REGISTER = 0x80;
     private static final int ATIME_REGISTER = 0x81;
@@ -15,7 +15,7 @@ public class APDS9151 {
 
     private final I2C i2c;
 
-    public APDS9151(I2C.Port port) {
+    public ColorSensor(I2C.Port port) {
         i2c = new I2C(port, APDS9151_I2C_ADDRESS);
         initializeSensor();
     }
