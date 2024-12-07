@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
 
 import java.util.function.Supplier;
 

@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase  {
-    private final TalonSRX frontRight = new TalonSRX(Constants.Drivetrain.frontRightID);
-    private final TalonSRX frontLeft = new TalonSRX(Constants.Drivetrain.frontLeftID);
-    private final TalonSRX backRight = new TalonSRX(Constants.Drivetrain.backRightID);
-    private final TalonSRX backLeft = new TalonSRX(Constants.Drivetrain.backLeftID);
+    private final TalonSRX frontRight = new TalonSRX(Constants.Drivetrain.frontRightCANID);
+    private final TalonSRX frontLeft = new TalonSRX(Constants.Drivetrain.frontLeftCANID);
+    private final TalonSRX backRight = new TalonSRX(Constants.Drivetrain.backRightCANID);
+    private final TalonSRX backLeft = new TalonSRX(Constants.Drivetrain.backLeftCANID);
 
     private final AHRS navx = new AHRS(); //change input to use usb for navx micro
 

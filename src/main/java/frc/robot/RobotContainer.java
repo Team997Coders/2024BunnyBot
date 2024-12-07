@@ -5,14 +5,26 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
+import frc.robot.commands.CratePickerUperManualDown;
+import frc.robot.commands.CratePickerUperManualUp;
 import frc.robot.commands.Drive;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.CratePickerUperNextDown;
+import frc.robot.commands.CratePickerUperNextUp;
+import frc.robot.commands.IndexCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.subsystems.Intake;
+
+import java.util.function.BooleanSupplier;
+
+import edu.wpi.first.networktables.BooleanSubscriber;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.CratePickerUper;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Indexer;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,7 +34,8 @@ import frc.robot.subsystems.Drivetrain;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final CratePickerUper cratePickerUper = new CratePickerUper();
+
   private final Drivetrain m_drivetrain = new Drivetrain();
   
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -30,7 +43,16 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
       
-  
+  private final Intake m_intake = new Intake();
+  private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
+
+  private final Indexer m_indexer = new Indexer();
+  private final IndexCommand m_IndexCommand = new IndexCommand(m_indexer, m_IntakeCommand, !m_driverController.button(8).getAsBoolean(), m_driverController.b().getAsBoolean(), m_driverController.y().getAsBoolean());
+
+  private final CratePickerUper m_CratePickerUper = new CratePickerUper();
+
+
+  Trigger isThereCrateTrigger = new Trigger(m_CratePickerUper.crateSensor::get);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -54,13 +76,20 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    
+    m_driverController.a().whileTrue(m_IntakeCommand);
 
+    isThereCrateTrigger.whileTrue(m_IndexCommand);
+
+    m_driverController.povUp().whileTrue(new CratePickerUperManualUp(cratePickerUper));
+    m_driverController.povDown().whileTrue(new CratePickerUperManualDown(cratePickerUper));
+    m_driverController.povLeft().onTrue(new CratePickerUperNextUp(cratePickerUper));
+    m_driverController.povRight().onTrue(new CratePickerUperNextDown(cratePickerUper));
+    
   }
 
   /**.
@@ -68,8 +97,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return null;
   }
 }
