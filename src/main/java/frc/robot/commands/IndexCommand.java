@@ -66,7 +66,7 @@ public class IndexCommand<pull> extends Command{
       }
 
       if (m_openServo){
-        m_index.moveServo1(Constants.Indexer.escapeServoAngleDegrees);
+        m_index.moveServo1(Constants.Indexer.servoAngleDegreesOpen);
       } else{
 
       }
