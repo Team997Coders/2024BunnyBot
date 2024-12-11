@@ -46,9 +46,9 @@ public class IndexCommand<pull> extends Command{
 
 
       if (m_index.isColorGood() == false) {
-        m_index.moveServo1(Constants.Indexer.escapeServoAngleDegrees);
+        m_index.moveServo1(Constants.Indexer.servoAngleDegreesOpen);
       } else if (m_index.isColorGood()) {
-        m_index.moveServo1(0);
+        m_index.moveServo1(Constants.Indexer.servoAngleDegreesClosed);
       }
 
     }

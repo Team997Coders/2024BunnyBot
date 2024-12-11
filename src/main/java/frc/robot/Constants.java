@@ -79,7 +79,8 @@ public final class Constants {
     public static final int bottombBeamBreakID = 4; //DIO
     public static final int topBeamBreakID = 5;
 
-    public static final double escapeServoAngleDegrees = 180;
+    public static final double servoAngleDegreesOpen = 180;
+    public static final double servoAngleDegreesClosed = 0;
 
    }
 
