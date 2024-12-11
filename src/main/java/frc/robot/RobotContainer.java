@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.CratePickerUperManualDown;
 import frc.robot.commands.CratePickerUperManualUp;
+import frc.robot.commands.Drive;
 import frc.robot.commands.CratePickerUperNextDown;
 import frc.robot.commands.CratePickerUperNextUp;
 import frc.robot.commands.IndexCommand;
@@ -41,7 +42,7 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-
+      
   private final Intake m_intake = new Intake();
   private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
 
@@ -56,15 +57,12 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_drivetrain.runMotors(m_driverController.getRightY(), m_driverController.getLeftY());
-
     // Configure the trigger bindings
     configureBindings();
 
-    
-
-    
-
+    m_drivetrain.setDefaultCommand(new Drive(
+      () -> m_driverController.getRightY(), 
+      () -> m_driverController.getRightX()));
   }
 
   /**
