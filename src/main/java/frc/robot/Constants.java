@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.I2C;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -79,9 +80,10 @@ public final class Constants {
     public static final int bottomBeamBreakID = 0; //DIO
     public static final int topBeamBreakID = 1;
 
-    public static final double escapeServoAngleDegrees = 90;
-    public static final double closedServoAngleDegrees = 0;
+    public static final double escapeServoAngleDegrees = 0;
+    public static final double closedServoAngleDegrees = 90;
 
+    public static final I2C.Port i2cPort = I2C.Port.kMXP;
    }
 
 

@@ -13,14 +13,11 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.lib.ColorSensor;
-import frc.robot.lib.ColorSensor.ColorData;
 
 public class Indexer extends SubsystemBase { 
 
     private final Spark fanChunk = new Spark(Constants.Indexer.FanChunkID);
 
-    private final ColorSensor colorSensor = new ColorSensor(I2C.Port.kMXP);
     
      Optional<Alliance> ally = DriverStation.getAlliance();
      
@@ -48,37 +45,8 @@ public class Indexer extends SubsystemBase {
        escapeServo.setAngle(angleDegrees);
      }
 
-     public Boolean isColorGood() {
-      ColorData color = colorSensor.getColorData();
-      double blue = color.blue;
-      double red = color.red;
-      Alliance estimatedColor = null;
-      Boolean output = null;
-      
-      if (blue-red >= 25) {
-        estimatedColor = Alliance.Blue;
-      } else if (red-blue >= 25) {
-        estimatedColor = Alliance.Red;
-      } else {
-        return null;
-      }
-
-      if (estimatedColor == ally.get()) {
-        output = true;
-      } else {
-        output = false;
-      }
-            
-      return output;
-     }
-
     public Alliance getAlliance()
     {
       return ally.get();
-    }
-
-    public ColorData getColorTuples() 
-    {
-      return colorSensor.getColorData();
     }
 }

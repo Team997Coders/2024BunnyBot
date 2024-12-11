@@ -12,6 +12,7 @@ import frc.robot.commands.CratePickerUperNextDown;
 import frc.robot.commands.CratePickerUperNextUp;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.SwitchIndexerMode;
 import frc.robot.subsystems.Intake;
 
 import java.util.function.BooleanSupplier;
@@ -49,6 +50,10 @@ public class RobotContainer {
   private final Indexer m_indexer = new Indexer();
   //private final CratePickerUper m_CratePickerUper = new CratePickerUper();
 
+  private final IndexCommand m_IndexCommand = new IndexCommand(
+      m_indexer, false, 
+      () -> (m_driverController.b().getAsBoolean()), 
+      () -> (m_driverController.y().getAsBoolean()));
 
   //Trigger isThereCrateTrigger = new Trigger(m_CratePickerUper.crateSensor::get);
 
@@ -58,10 +63,9 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    m_indexer.setDefaultCommand(new IndexCommand(
-      m_indexer, false, 
-      () -> (m_driverController.b().getAsBoolean()), 
-      () -> (m_driverController.y().getAsBoolean())));
+    m_indexer.setDefaultCommand(m_IndexCommand);
+
+    m_driverController.leftBumper().onTrue(new SwitchIndexerMode(m_IndexCommand));
 
 
     //m_drivetrain.setDefaultCommand(new Drive(
