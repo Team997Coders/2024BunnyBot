@@ -62,7 +62,7 @@ public class RobotContainer {
 
     m_drivetrain.setDefaultCommand(new Drive(
       m_drivetrain,
-      () -> -m_driverController.getRightY(), 
+      () -> m_driverController.getRightY(), 
       () -> m_driverController.getRightX()));
   }
 

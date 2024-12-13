@@ -28,8 +28,8 @@ public class Drive extends Command {
     
     @Override
     public void execute() {
-      double rightPower = -m_forwardSupplier.get() + m_turnSupplier.get();
-      double leftPower =  -m_forwardSupplier.get() - m_turnSupplier.get();
+      double rightPower = -m_forwardSupplier.get() + m_turnSupplier.get() * Constants.Controller.movingTurningFactor;
+      double leftPower =  -m_forwardSupplier.get() - m_turnSupplier.get() * Constants.Controller.movingTurningFactor;
 
       if (Math.abs(m_forwardSupplier.get()) < 0.05 && Math.abs(m_turnSupplier.get()) < 0.05)
       {
