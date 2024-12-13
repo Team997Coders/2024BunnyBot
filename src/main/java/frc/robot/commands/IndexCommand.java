@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Constants.Intake;
 import frc.robot.subsystems.Indexer;
 
 import com.revrobotics.ColorSensorV3;
@@ -20,6 +21,9 @@ public class IndexCommand<pull> extends Command{
     public boolean m_automatic = true;
     public Supplier<Boolean> m_spinIndexer;
     public Supplier<Boolean> m_openServo;
+    public Supplier<Boolean> m_spinIntake;
+    public frc.robot.subsystems.Intake m_intake;
+
     public int balloonCounter = 0;
     public boolean lastBottomBeamBreak = false;
     public boolean lastTopBeamBreak = false;
@@ -38,11 +42,13 @@ public class IndexCommand<pull> extends Command{
 
     private boolean exiting = false;
 
-    public IndexCommand(Indexer index, boolean automatic, Supplier<Boolean> spinIndexer, Supplier<Boolean> openServo){
+    public IndexCommand(Indexer index, boolean automatic, Supplier<Boolean> spinIndexer, Supplier<Boolean> openServo, Supplier<Boolean> spinIntake, frc.robot.subsystems.Intake intake){
         m_index = index;
         m_spinIndexer = spinIndexer;
         m_automatic = automatic;
         m_openServo = openServo; 
+        m_spinIntake = spinIntake;
+        m_intake = intake;
         
         m_colorMatcher.addColorMatch(kBlueTarget);
         m_colorMatcher.addColorMatch(kGreenTarget);
@@ -70,7 +76,10 @@ public class IndexCommand<pull> extends Command{
         {
           if (balloonCounter == 0) 
           {
-            //m_intakeCommand.schedule();
+            m_intake.spinFlapper(1);
+          } else 
+          {
+            m_intake.spinFlapper(0);
           }
           if (m_index.getBottomBeamBreak() && !lastBottomBeamBreak) 
           {
@@ -146,6 +155,13 @@ public class IndexCommand<pull> extends Command{
       } else
       {
           m_index.moveEscapeServo(Constants.Indexer.closedServoAngleDegrees);
+      }
+      if (m_spinIntake.get())
+      {
+        m_intake.spinFlapper(1);
+      } else 
+      {
+        m_intake.spinFlapper(0);
       }
     }
 

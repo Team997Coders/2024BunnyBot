@@ -53,10 +53,9 @@ public class RobotContainer {
   private final IndexCommand m_IndexCommand = new IndexCommand(
       m_indexer, false, 
       () -> (m_driverController.b().getAsBoolean()), 
-      () -> (m_driverController.y().getAsBoolean()));
-
-  Trigger isThereCrateTrigger = new Trigger(m_cratePickerUper.crateSensor::get);
-
+      () -> (m_driverController.y().getAsBoolean()),
+      () -> (m_driverController.x().getAsBoolean()),
+      m_intake);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -84,16 +83,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
     m_driverController.a().whileTrue(m_IntakeCommand);
-
-    //isThereCrateTrigger.whileTrue(m_IndexCommand);
-
 
     m_driverController.povUp().whileTrue(new CratePickerUperManualUp(m_cratePickerUper));
     m_driverController.povDown().whileTrue(new CratePickerUperManualDown(m_cratePickerUper));
