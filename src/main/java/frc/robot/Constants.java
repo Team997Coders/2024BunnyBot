@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.I2C;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -71,15 +72,17 @@ public final class Constants {
     }
     
    public static class Indexer {
-    public static final int fanChunkID = 3; //PWM
-    public static final int servo1ID = 5;
+    public static final int FanChunkID = 0; //PWM
+    public static final int escapeServoID = 1;
 
-    public static final int bottombBeamBreakID = 4; //DIO
-    public static final int topBeamBreakID = 5;
+    public static final int bottomBeamBreakID = 0; //DIO
+    public static final int topBeamBreakID = 1;
 
-    public static final double servoAngleDegreesOpen = 180;
-    public static final double servoAngleDegreesClosed = 0;
+    
+    public static final double escapeServoAngleDegrees = 0;
+    public static final double closedServoAngleDegrees = 90;
 
+    public static final I2C.Port i2cPort = I2C.Port.kMXP;
    }
 
    public static class Controller {
