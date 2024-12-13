@@ -44,18 +44,18 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
       
-  //private final Intake m_intake = new Intake();
- // private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
+  private final Intake m_intake = new Intake();
+  private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
 
   private final Indexer m_indexer = new Indexer();
-  private final CratePickerUper m_CratePickerUper = new CratePickerUper();
+  private final CratePickerUper m_cratePickerUper = new CratePickerUper();
 
   private final IndexCommand m_IndexCommand = new IndexCommand(
       m_indexer, false, 
       () -> (m_driverController.b().getAsBoolean()), 
       () -> (m_driverController.y().getAsBoolean()));
 
-  //Trigger isThereCrateTrigger = new Trigger(m_CratePickerUper.crateSensor::get);
+  Trigger isThereCrateTrigger = new Trigger(m_cratePickerUper.crateSensor::get);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -95,10 +95,10 @@ public class RobotContainer {
     //isThereCrateTrigger.whileTrue(m_IndexCommand);
 
 
-    m_driverController.povUp().whileTrue(new CratePickerUperManualUp(cratePickerUper));
-    m_driverController.povDown().whileTrue(new CratePickerUperManualDown(cratePickerUper));
-    m_driverController.povLeft().onTrue(new CratePickerUperNextUp(cratePickerUper));
-    m_driverController.povRight().onTrue(new CratePickerUperNextDown(cratePickerUper));
+    m_driverController.povUp().whileTrue(new CratePickerUperManualUp(m_cratePickerUper));
+    m_driverController.povDown().whileTrue(new CratePickerUperManualDown(m_cratePickerUper));
+    m_driverController.povLeft().onTrue(new CratePickerUperNextUp(m_cratePickerUper));
+    m_driverController.povRight().onTrue(new CratePickerUperNextDown(m_cratePickerUper));
     
   }
 
