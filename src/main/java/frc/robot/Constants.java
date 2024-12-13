@@ -27,11 +27,10 @@ public final class Constants {
     //TODO: Get Limit switch (Digital input) id# for both top and bottom max
     public static final int topLimitSwitchID = 1;
     public static final int bottomLimitSwitchID = 0;
-
     public static final int crateSensorID = 0;
     //TODO: fix the inequalities in cratePickerUperController Command for corrected limit switch locations
-    public static final int topLimitSwitchPosition = 0;
-    public static final int bottomLimitSwitchPosition = 0;
+    public static final double topLimitSwitchPosition = 0;
+    public static final double bottomLimitSwitchPosition = 0;
     //TODO: Tune PID for the CratePickerUper
     public static class pid {
       public static final double p = 0.1;
@@ -50,6 +49,7 @@ public final class Constants {
     public static final double manualOutput = 0.0;
     public static final double manualVoltage = 0.0;
   }
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }

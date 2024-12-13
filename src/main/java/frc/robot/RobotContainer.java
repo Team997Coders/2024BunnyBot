@@ -42,18 +42,18 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-
       
-  private final Intake m_intake = new Intake();
-  private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
+  //private final Intake m_intake = new Intake();
+  //private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
 
-  private final Indexer m_indexer = new Indexer();
+  //private final Indexer m_indexer = new Indexer();
+
   private final CratePickerUper m_cratePickerUper = new CratePickerUper();
 
-  private final IndexCommand m_IndexCommand = new IndexCommand(
-      m_indexer, false, 
-      () -> (m_driverController.b().getAsBoolean()), 
-      () -> (m_driverController.y().getAsBoolean()));
+  //private final IndexCommand m_IndexCommand = new IndexCommand(
+  //    m_indexer, false, 
+  //    () -> (m_driverController.b().getAsBoolean()), 
+  //    () -> (m_driverController.y().getAsBoolean()));
 
   Trigger isThereCrateTrigger = new Trigger(m_cratePickerUper.crateSensor::get);
 
@@ -63,10 +63,9 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    m_indexer.setDefaultCommand(m_IndexCommand);
+    //m_indexer.setDefaultCommand(m_IndexCommand);
 
-    m_driverController.leftBumper().onTrue(new SwitchIndexerMode(m_IndexCommand));
-
+    //m_driverController.leftBumper().onTrue(new SwitchIndexerMode(m_IndexCommand));
 
     m_drivetrain.setDefaultCommand(new Drive(
       m_drivetrain,
@@ -90,7 +89,7 @@ public class RobotContainer {
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
-    m_driverController.a().whileTrue(m_IntakeCommand);
+    //m_driverController.a().whileTrue(m_IntakeCommand);
 
     //isThereCrateTrigger.whileTrue(m_IndexCommand);
 
