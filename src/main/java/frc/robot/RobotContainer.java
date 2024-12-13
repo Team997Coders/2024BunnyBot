@@ -37,25 +37,25 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //private final CratePickerUper cratePickerUper = new CratePickerUper();
 
-  //private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Drivetrain m_drivetrain = new Drivetrain();
   
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
       
-  //private final Intake m_intake = new Intake();
-  //private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
+  private final Intake m_intake = new Intake();
+  private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
 
   private final Indexer m_indexer = new Indexer();
-  //private final CratePickerUper m_CratePickerUper = new CratePickerUper();
+  private final CratePickerUper m_CratePickerUper = new CratePickerUper();
 
   private final IndexCommand m_IndexCommand = new IndexCommand(
       m_indexer, false, 
       () -> (m_driverController.b().getAsBoolean()), 
       () -> (m_driverController.y().getAsBoolean()));
 
-  //Trigger isThereCrateTrigger = new Trigger(m_CratePickerUper.crateSensor::get);
+  Trigger isThereCrateTrigger = new Trigger(m_CratePickerUper.crateSensor::get);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -68,9 +68,10 @@ public class RobotContainer {
     m_driverController.leftBumper().onTrue(new SwitchIndexerMode(m_IndexCommand));
 
 
-    //m_drivetrain.setDefaultCommand(new Drive(
-    //  () -> m_driverController.getRightY(), 
-    //  () -> m_driverController.getRightX()));
+    m_drivetrain.setDefaultCommand(new Drive(
+      m_drivetrain,
+      () -> m_driverController.getRightY(), 
+      () -> m_driverController.getRightX()));
   }
 
   /**
