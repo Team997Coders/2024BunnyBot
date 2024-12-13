@@ -33,11 +33,11 @@ public class Drive extends Command {
 
       if (Math.abs(forward) < 0.05 && Math.abs(turn) < 0.05)
       {
-         double total = forward + m_turnSupplier.get();
+         double total = forward + turn;
       if (Math.abs(total) > 1 ) {
         double totalPercent = total / 2;
-        double forwardPercent = m_forwardSupplier.get()/ totalPercent;
-        double turnPercent = m_turnSupplier.get() / totalPercent;
+        double forwardPercent = forward/ total;
+        double turnPercent = turn /total;
         
         double newForward = forwardPercent*totalPercent;
         double newTurn = turnPercent*totalPercent;
@@ -47,10 +47,12 @@ public class Drive extends Command {
         
       }
 
-      double rightPower = -m_forwardSupplier.get() + m_turnSupplier.get() * Constants.Controller.movingTurningFactor;
-      double leftPower =  -m_forwardSupplier.get() - m_turnSupplier.get() * Constants.Controller.movingTurningFactor;
+      double rightPower = -forward + turn * Constants.Controller.movingTurningFactor;
+      double leftPower =  -forward - turn * Constants.Controller.movingTurningFactor;
 
       m_drivetrain.runMotors(rightPower, leftPower);
+      } else {
+        m_drivetrain.runMotors(0, 0);
       }
   }
 
