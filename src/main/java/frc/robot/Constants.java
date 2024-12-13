@@ -54,15 +54,13 @@ public final class Constants {
   }
 
   public static class Drivetrain  {
-    public static final int frontRightCANID = 0; //CAN
-    public static final int frontLeftCANID = 1;
-    public static final int backRightCANID = 2;
-    public static final int backLeftCANID = 3;
+    public static final int frontRightCANID = 5; //CAN
+    public static final int frontLeftCANID = 8;
+    public static final int backRightCANID = 6;
+    public static final int backLeftCANID = 7;
 
-    public static final int rightEncoderInputA = 0; //DIO
-    public static final int rightEncoderInputB = 1;
-     public static final int leftEncoderInputA = 2;
-    public static final int leftEncoderInputB = 3;
+    //public static final int rightEncoderInput = 0; //DIO
+    //public static final int leftEncoderInput = 1;
   }
     public static class Intake {
       public static final int intakeMotorID = 0; //PWM
@@ -84,6 +82,14 @@ public final class Constants {
 
    }
 
+   public static class Controller {
+    public static final double controllerYDeadband = 0.05; //deadband to distinguish stationary from moving turning
+
+    public static final double stationaryTurningFactor = 0.8; //turning factor when stationary. a value of 1, or 100%, may be too fast to control easily
+    public static final double movingTurningFactor = 0.6; //turning factor when moving. a value of 1, or 100%, will have the robot pivot on the inside wheel. That's too fast!
+
+    public static final double speedFactor = 0.5; //scalar for joystick inputs
+   }
 
 
 }

@@ -20,15 +20,15 @@ public class Drivetrain extends SubsystemBase  {
 
     private final AHRS navx = new AHRS(); //change input to use usb for navx micro
 
-    private final Encoder rightEncoder = new Encoder(Constants.Drivetrain.rightEncoderInputA, Constants.Drivetrain.rightEncoderInputB);
-    private final Encoder leftEncoder = new Encoder(Constants.Drivetrain.leftEncoderInputA, Constants.Drivetrain.leftEncoderInputB);
+    //private final Encoder rightEncoder = new Encoder(Constants.Drivetrain.rightEncoderInput);
+    //private final Encoder leftEncoder = new Encoder(Constants.Drivetrain.leftEncoderInput);
 
     public Drivetrain(){
-        rightEncoder.reset();
-        leftEncoder.reset();
+      //  rightEncoder.reset();
+      //  leftEncoder.reset();
         navx.reset();
-        frontRight.setInverted(true);
-        backRight.setInverted(true);
+        frontLeft.setInverted(true);
+        backLeft.setInverted(true);
     }
 
     public void runMotors(double rightPercentOutput, double leftPercentOutput){
@@ -38,21 +38,21 @@ public class Drivetrain extends SubsystemBase  {
         backLeft.set(ControlMode.PercentOutput, leftPercentOutput);
     }
 
-    public double getRightDistance(){
-        return rightEncoder.getDistance();    
-    }
+    //public double getRightDistance(){
+    //    return rightEncoder.getDistance();    
+    //}
     
-    public double getLeftDistance(){
-        return leftEncoder.getDistance();
-    }
+    //public double getLeftDistance(){
+    //    return leftEncoder.getDistance();
+    //}
     
-    public void resetRightEncoder(){
-        rightEncoder.reset();
-    }
+    //public void resetRightEncoder(){
+    //    rightEncoder.reset();
+    //}
 
-    public void resetLeftEncoder(){
-        leftEncoder.reset();
-    }
+    //public void resetLeftEncoder(){
+    //    leftEncoder.reset();
+    //}
 
     public double getYaw(){
         return navx.getYaw();

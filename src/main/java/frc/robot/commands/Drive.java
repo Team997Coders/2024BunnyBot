@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
 import java.util.function.Supplier;
@@ -7,16 +8,16 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Drive extends Command {
-    private final Drivetrain drivetrain = new Drivetrain();
+    private Supplier<Double> m_forwardSupplier;
+    private Supplier<Double> m_turnSupplier;
+    private Drivetrain m_drivetrain;
 
-    private double m_forwardSupplier;
-    private double m_turnSupplier;
+    public Drive(Drivetrain drivetrain, Supplier<Double> forwardSupplier, Supplier<Double> turnSupplier) {
+      m_forwardSupplier = forwardSupplier;
+      m_turnSupplier = turnSupplier;
+      m_drivetrain = drivetrain;
 
-    public Drive(Supplier<Double> forwardSupplier, Supplier<Double> turnSupplier
-) {
-      m_forwardSupplier = forwardSupplier.get();
-      m_turnSupplier = turnSupplier.get();
-
+      addRequirements(drivetrain);
     }
 
 
@@ -27,11 +28,17 @@ public class Drive extends Command {
     
     @Override
     public void execute() {
-      double rightPower = m_forwardSupplier - m_turnSupplier;
-      double leftPower =  m_forwardSupplier + m_turnSupplier;
-      drivetrain.runMotors(rightPower, leftPower);
-      
-    }
+      double rightPower = -m_forwardSupplier.get() + m_turnSupplier.get();
+      double leftPower =  -m_forwardSupplier.get() - m_turnSupplier.get();
+
+      if (Math.abs(m_forwardSupplier.get()) < 0.05 && Math.abs(m_turnSupplier.get()) < 0.05)
+      {
+        rightPower = 0;
+        leftPower = 0;
+      }
+
+      m_drivetrain.runMotors(rightPower, leftPower);
+  }
 
 
     @Override
