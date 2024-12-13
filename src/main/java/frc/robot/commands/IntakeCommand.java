@@ -21,7 +21,7 @@ public class IntakeCommand extends Command{
     m_intake.spinFlapper(Constants.Intake.defaultSpinnerSpeed);
   }
 
-  @Override
+  @Override 
   public void end(boolean interrupted) {
     m_intake.spinFlapper(0);
   }
