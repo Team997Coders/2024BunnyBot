@@ -10,12 +10,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class Drive extends Command {
     private Supplier<Double> m_forwardSupplier;
     private Supplier<Double> m_turnSupplier;
-    private Drivetrain m_drivetrain;
+    private Drivetrain m_drivetrain = new Drivetrain();
 
     public Drive(Drivetrain drivetrain, Supplier<Double> forwardSupplier, Supplier<Double> turnSupplier) {
       m_forwardSupplier = forwardSupplier;
       m_turnSupplier = turnSupplier;
-      m_drivetrain = drivetrain;
 
       addRequirements(drivetrain);
     }
@@ -28,16 +27,31 @@ public class Drive extends Command {
     
     @Override
     public void execute() {
+
+      double forward = m_forwardSupplier.get();
+      double turn = m_turnSupplier.get();
+
+      if (Math.abs(forward) < 0.05 && Math.abs(turn) < 0.05)
+      {
+         double total = forward + m_turnSupplier.get();
+      if (Math.abs(total) > 1 ) {
+        double totalPercent = total / 2;
+        double forwardPercent = m_forwardSupplier.get()/ totalPercent;
+        double turnPercent = m_turnSupplier.get() / totalPercent;
+        
+        double newForward = forwardPercent*totalPercent;
+        double newTurn = turnPercent*totalPercent;
+
+        forward =(Math.signum(forward)*newForward);
+        turn = Math.signum(turn)*newTurn;
+        
+      }
+
       double rightPower = -m_forwardSupplier.get() + m_turnSupplier.get() * Constants.Controller.movingTurningFactor;
       double leftPower =  -m_forwardSupplier.get() - m_turnSupplier.get() * Constants.Controller.movingTurningFactor;
 
-      if (Math.abs(m_forwardSupplier.get()) < 0.05 && Math.abs(m_turnSupplier.get()) < 0.05)
-      {
-        rightPower = 0;
-        leftPower = 0;
-      }
-
       m_drivetrain.runMotors(rightPower, leftPower);
+      }
   }
 
 
